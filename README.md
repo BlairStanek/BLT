@@ -1,4 +1,4 @@
-This contains all the code for our paper *BLT: Can Large Language Models Handle Basic Legal Text?*.  The code that calls the APIs, tests for accuracy (using hand-crafted rules), and classifies the errors is in the Call directory.  
+This contains all the code for our paper *BLT: Can Large Language Models Handle Basic Legal Text?*.  The code that calls the APIs, tests for accuracy (using hand-crafted rules), and classifies the errors is in the Call directory.  The code in the Generate directory can be used to generate almost unlimited amounts of training and test data of the same sort as the benchmark. 
 
 The test and train sets for BLT-4k are in the Data directory of this repository.  BLT-4k and larger-prompt-window versions of the benchmark are available for download at the links below:
 
