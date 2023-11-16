@@ -2,6 +2,8 @@ This contains all the code for our paper *BLT: Can Large Language Models Handle 
 
 The test and train sets for BLT-4k are in the Data directory of this repository.  BLT-4k and larger-prompt-window versions of the benchmark are available for download at the links below:
 
+<http://nlp.jhu.edu/law/blt/BLT-4k.zip>
+
 <http://nlp.jhu.edu/law/blt/BLT-8k.zip>
 
 <http://nlp.jhu.edu/law/blt/BLT-16k.zip>
