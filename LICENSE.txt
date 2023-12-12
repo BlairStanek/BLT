@@ -1,10 +1,10 @@
 MIT License WITH AMENDMENT
 
-Copyright (c) 2023 Andrew Blair-Stanek
+Copyright (c) 2023 by the first author of the BLT paper (name omitted to facilitate anonymous peer review). 
 
 The subject matter of this license is: (a) the software code and documentation on this repository; (b) the BLT* test data on this repository; (c) the BLT* training data on this repository; and (d) any additional test, training, or validation data generated using the code on this repository or any code adapted from the code on this repository.
 
-Except with the express written permission of Andrew Blair-Stanek, none of the subject matter may be included in another published dataset, benchmark, or similar compilation.  (I’m available at ablair-stanek@law.umaryland.edu.)
+Except with the express written permission of the first author of the BLT paper, none of the subject matter may be included in another published dataset, benchmark, or similar compilation.  The first author of the BLT paper answers emails promptly. 
 
 Except as provided above, permission is hereby granted, free of charge, to any person obtaining a copy of subject matter, to deal in the subject matter without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the subject matter, and to permit persons to whom the subject matter is furnished to do so, subject to the following conditions:
 
