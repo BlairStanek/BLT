@@ -9,6 +9,7 @@ class LLMChat:
         self.bison_chat_model = None
         self.bison_chat = None
         self.legacy_davinci_tokenizer = None
+        self.claude_model = None
 
     # Call this to actually pass chat text; it returns the response
     def chat(self, prompt):
@@ -82,7 +83,7 @@ class LLMChat:
                 #     print("Timeout error, retrying in 5s.")
                 #     time.sleep(5)
             assert worked
-        elif "chat-bison" in self.model: # This is a Google model
+        elif "chat-bison@001" == self.model: # This is a Google model
             # we import lazily (ie, not at top) so those using only 1 of the APIs
             # don't have to install the python support for the others
             from vertexai.language_models import ChatModel
@@ -104,6 +105,70 @@ class LLMChat:
                     print("Resource Exhausted, retrying in 5s.")
                     time.sleep(5)
             assert worked
+
+        elif "chat-bison-32k" == self.model: # This is a Google model
+            # we import lazily (ie, not at top) so those using only 1 of the APIs
+            # don't have to install the python support for the others
+            from vertexai.preview.language_models import ChatModel
+            from google.api_core.exceptions import ResourceExhausted
+            # import google.generativeai as palm # We now use the APIs above
+
+            # You must have already configured a Google Cloud project and set up authorization with billing
+            # to call bison in this way.
+            worked = False
+            while not worked:
+                try:
+                    if self.bison_chat_model is None:
+                        self.bison_chat_model = ChatModel.from_pretrained(self.model)
+                        self.bison_chat = self.bison_chat_model.start_chat(temperature=0.0)
+                    self.bison_chat.send_message(prompt)
+                    response_text = self.bison_chat.message_history[-1].content
+                    worked = True
+                except ResourceExhausted:
+                    print("Resource Exhausted, retrying in 5s.")
+                    time.sleep(5)
+            assert worked
+
+        elif "claude" in self.model: # This is a Google model
+            # we import lazily (ie, not at top) so those using only 1 of the APIs
+            # don't have to install the python support for the others
+            from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+            self.history.append({"role": "user", "content": prompt})
+
+            worked = False
+            while not worked:
+                try:
+                    if self.claude_model is None:
+                        self.claude_model = Anthropic() # you must have ANTHROPIC_API_KEY already in your environment
+
+                    claude_prompt = ""
+                    for message in self.history:  # basically just concat everything
+                        if message["role"] == "user":
+                            claude_prompt += HUMAN_PROMPT
+                            claude_prompt += message["content"]
+                        elif message["role"] == "assistant":
+                            claude_prompt += AI_PROMPT
+                            claude_prompt += message["content"]
+                    claude_prompt += AI_PROMPT
+
+                    completion = self.claude_model.completions.create(
+                        model=self.model,
+                        max_tokens_to_sample=3000,
+                        prompt=claude_prompt,
+                        temperature=0.0
+                    )
+                    response_text = completion.completion
+                    self.history.append({"role": "assistant", "content": response_text}) # store for future
+
+                    worked = True
+                except:
+                    print("Error, retrying in 5s.")
+                    time.sleep(5)
+            assert worked
+        else:
+            assert False, "model not supported:" + self.model
+
+
         return response_text
 
 
